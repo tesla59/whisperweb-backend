@@ -1,12 +1,28 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+
 	"github.com/tesla59/whisperweb-backend/confession"
+	"github.com/tesla59/whisperweb-backend/database"
 )
+
+func initDB() {
+	var err error
+	database.DBConn, err = gorm.Open(sqlite.Open("confessions.db"))
+	if err != nil {
+		panic("Cannot connect to Database")
+	}
+	fmt.Println("Connected to DB")
+}
 
 func main() {
 	app := fiber.New()
+	initDB()
 
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
