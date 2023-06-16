@@ -18,6 +18,8 @@ func initDB() {
 		panic("Cannot connect to Database")
 	}
 	fmt.Println("Connected to DB")
+	database.DBConn.AutoMigrate(&confession.Confession{})
+	fmt.Println("Migrated successfully")
 }
 
 func main() {
