@@ -2,7 +2,11 @@ module github.com/tesla59/whisperweb-backend
 
 go 1.20
 
-require github.com/gofiber/fiber/v2 v2.46.0
+require (
+	github.com/gofiber/fiber/v2 v2.46.0
+	gorm.io/driver/sqlite v1.5.2
+	gorm.io/gorm v1.25.2-0.20230530020048-26663ab9bf55
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
@@ -23,6 +27,4 @@ require (
 	github.com/valyala/fasthttp v1.47.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
-	gorm.io/driver/sqlite v1.5.2 // indirect
-	gorm.io/gorm v1.25.2-0.20230530020048-26663ab9bf55 // indirect
 )
