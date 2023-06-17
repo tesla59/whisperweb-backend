@@ -23,6 +23,7 @@ func NewConfession(c *fiber.Ctx) error {
 	var confession Confession
 	if err := c.BodyParser(&confession); err != nil {
 		c.Status(http.StatusBadRequest).SendString(fmt.Sprint(err))
+		return err
 	}
 	db.Create(&confession)
 	return c.Status(http.StatusOK).JSON(confession)
