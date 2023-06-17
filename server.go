@@ -7,8 +7,9 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/tesla59/whisperweb-backend/confession"
+	"github.com/tesla59/whisperweb-backend/handlers"
 	"github.com/tesla59/whisperweb-backend/database"
+	"github.com/tesla59/whisperweb-backend/models"
 )
 
 func initDB() {
@@ -18,7 +19,7 @@ func initDB() {
 		panic("Cannot connect to Database")
 	}
 	fmt.Println("Connected to DB")
-	database.DBConn.AutoMigrate(&confession.Confession{})
+	database.DBConn.AutoMigrate(&models.Confession{})
 	fmt.Println("Migrated successfully")
 }
 
@@ -27,10 +28,10 @@ func initRoutes(app *fiber.App) {
 	v1 := api.Group("/v1")
 	confessionRoute := v1.Group("/confession")
 
-	confessionRoute.Post("/new", confession.NewConfession)
-	confessionRoute.Get("/get/:id", confession.GetConfession)
-	confessionRoute.Get("/getall", confession.GetAllConfession)
-	confessionRoute.Delete("/delete/:id", confession.DeleteConfession)
+	confessionRoute.Post("/new", handlers.NewConfession)
+	confessionRoute.Get("/get/:id", handlers.GetConfession)
+	confessionRoute.Get("/getall", handlers.GetAllConfession)
+	confessionRoute.Delete("/delete/:id", handlers.DeleteConfession)
 }
 
 func main() {
