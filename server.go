@@ -22,10 +22,7 @@ func initDB() {
 	fmt.Println("Migrated successfully")
 }
 
-func main() {
-	app := fiber.New()
-	initDB()
-
+func initRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 	confessionRoute := v1.Group("/confession")
@@ -34,10 +31,11 @@ func main() {
 	confessionRoute.Get("/get/:id", confession.GetConfession)
 	confessionRoute.Get("/getall", confession.GetAllConfession)
 	confessionRoute.Delete("/delete/:id", confession.DeleteConfession)
+}
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
-
+func main() {
+	app := fiber.New()
+	initDB()
+	initRoutes(app)
 	app.Listen(":5000")
 }
