@@ -29,9 +29,13 @@ func NewConfession(c *fiber.Ctx) error {
 }
 
 func GetConfession(c *fiber.Ctx) error {
+	id := c.Params("id")
 	db := database.DBConn
 	var confession Confession
-	db.First(&confession)
+	db.First(&confession, id)
+	if confession.ID == "" {
+		return c.Status(http.StatusBadRequest).JSON("not found")
+	}
 	return c.JSON(confession)
 }
 
