@@ -25,6 +25,7 @@ func NewConfession(c *fiber.Ctx) error {
 		c.Status(http.StatusBadRequest).SendString(fmt.Sprint(err))
 		return err
 	}
+	// Check unique key constraint
 	db.Create(&confession)
 	return c.Status(http.StatusOK).JSON(confession)
 }
