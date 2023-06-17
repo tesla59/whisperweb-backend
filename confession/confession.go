@@ -48,5 +48,13 @@ func GetAllConfession(c *fiber.Ctx) error {
 }
 
 func DeleteConfession(c *fiber.Ctx) error {
-	return c.SendString("Delete a confession")
+	id := c.Params("id")
+	db := database.DBConn
+	var confession Confession
+	db.First(&confession, id)
+	if confession.ID == "" {
+		return c.Status(http.StatusBadRequest).JSON("not found")
+	}
+	db.Delete(&confession)
+	return c.JSON(confession)
 }

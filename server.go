@@ -33,6 +33,7 @@ func main() {
 	confessionRoute.Post("/new", confession.NewConfession)
 	confessionRoute.Get("/get/:id", confession.GetConfession)
 	confessionRoute.Get("/getall", confession.GetAllConfession)
+	confessionRoute.Delete("/delete/:id", confession.DeleteConfession)
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
