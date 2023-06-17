@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/tesla59/whisperweb-backend/database"
 )
 
 type Confession struct {
@@ -20,11 +21,17 @@ func NewConfession(c *fiber.Ctx) error {
 }
 
 func GetConfession(c *fiber.Ctx) error {
-	return c.SendString("Get a confession")
+	db := database.DBConn
+	var confession Confession
+	db.First(&confession)
+	return c.JSON(confession)
 }
 
 func GetAllConfession(c *fiber.Ctx) error {
-	return c.SendString("Get all confessions")
+	db := database.DBConn
+	var confessions []Confession
+	db.Find(&confessions)
+	return c.JSON(confessions)
 }
 
 func DeleteConfession(c *fiber.Ctx) error {
