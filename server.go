@@ -1,27 +1,11 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 
-	"github.com/tesla59/whisperweb-backend/handlers"
 	"github.com/tesla59/whisperweb-backend/database"
-	"github.com/tesla59/whisperweb-backend/models"
+	"github.com/tesla59/whisperweb-backend/handlers"
 )
-
-func initDB() {
-	var err error
-	database.DBConn, err = gorm.Open(sqlite.Open("confessions.db"))
-	if err != nil {
-		panic("Cannot connect to Database")
-	}
-	fmt.Println("Connected to DB")
-	database.DBConn.AutoMigrate(&models.Confession{})
-	fmt.Println("Migrated successfully")
-}
 
 func initRoutes(app *fiber.App) {
 	api := app.Group("/api")
@@ -36,7 +20,7 @@ func initRoutes(app *fiber.App) {
 
 func main() {
 	app := fiber.New()
-	initDB()
+	database.InitDB()
 	initRoutes(app)
 	app.Listen(":5000")
 }
