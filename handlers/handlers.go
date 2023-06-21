@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -18,6 +19,8 @@ func NewConfession(c *fiber.Ctx) error {
 		return err
 	}
 	confession.ID = uuid.NewString()
+	confession.CreatedAt = time.Now()
+	confession.UpdatedAt = time.Now()
 	// Check unique key constraint
 	db.Create(&confession)
 	return c.Status(http.StatusOK).JSON(confession)
