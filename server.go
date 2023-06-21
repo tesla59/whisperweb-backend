@@ -2,12 +2,15 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	"github.com/tesla59/whisperweb-backend/database"
 	"github.com/tesla59/whisperweb-backend/handlers"
 )
 
 func initRoutes(app *fiber.App) {
+	app.Use(cors.New())
+
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 	confessionRoute := v1.Group("/confession")
