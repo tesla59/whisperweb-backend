@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/tesla59/whisperweb-backend/database"
 	"github.com/tesla59/whisperweb-backend/models"
 )
@@ -16,6 +17,7 @@ func NewConfession(c *fiber.Ctx) error {
 		c.Status(http.StatusBadRequest).SendString(fmt.Sprint(err))
 		return err
 	}
+	confession.ID = uuid.NewString()
 	// Check unique key constraint
 	db.Create(&confession)
 	return c.Status(http.StatusOK).JSON(confession)
