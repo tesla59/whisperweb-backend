@@ -7,9 +7,23 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/tesla59/whisperweb-backend/database"
 	"github.com/tesla59/whisperweb-backend/models"
 )
+
+func InitRoutes(app *fiber.App) {
+	app.Use(cors.New())
+
+	api := app.Group("/api")
+	v1 := api.Group("/v1")
+	confessionRoute := v1.Group("/confession")
+
+	confessionRoute.Post("/new", NewConfession)
+	confessionRoute.Get("/get/:id", GetConfession)
+	confessionRoute.Get("/getall", GetAllConfession)
+	confessionRoute.Delete("/delete/:id", DeleteConfession)
+}
 
 func NewConfession(c *fiber.Ctx) error {
 	db := database.DBConn
